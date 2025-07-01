@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RobotSite - Test Runner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --secondary-color: #323131;
+        --success-color: #059669;
+        --danger-color: #dc2626;
+        --warning-color: #d97706;
+        --dark-color: #363636;
+        --console-bg: #0f172a;
+        --console-text: #10b981;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    body {
+        background: linear-gradient(135deg, #686868 0%, #2c2c2c 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+    }
+
+    .main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .header h1 {
+        color: #e7e7e7;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .header p {
+        color: #e7e7e7;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    .card {
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        background: white;
+        margin-bottom: 2rem;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+        color: white;
+        border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+        padding: 1.5rem;
+        border: none;
+    }
+
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .card-body {
+        padding: 2rem;
+        background-color: #1e293b;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+    }
+
+    .btn {
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #1d4ed8, var(--primary-color));
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, var(--danger-color), #ef4444);
+        box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
+    }
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #b91c1c, var(--danger-color));
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(220, 38, 38, 0.4);
+    }
+
+    .btn:disabled {
+        opacity: 0.6;
+        transform: none !important;
+        cursor: not-allowed;
+    }
+
+    #console {
+        background: var(--console-bg);
+        color: var(--console-text);
+        padding: 1.5rem;
+        height: 400px;
+        overflow-y: auto;
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        border-radius: 8px;
+        border: 2px solid #334155;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        scrollbar-width: thin;
+        scrollbar-color: #475569 var(--console-bg);
+    }
+
+    #console::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #console::-webkit-scrollbar-track {
+        background: var(--console-bg);
+    }
+
+    #console::-webkit-scrollbar-thumb {
+        background: #475569;
+        border-radius: 4px;
+    }
+
+    #console::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
+    }
+
+    .progress-indicator {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        border: 2px solid #0ea5e9;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: none;
+    }
+
+    .progress-indicator.show {
+        display: block;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .spinner-border {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-left: 1rem;
+    }
+
+    .status-running {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-success {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .status-error {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .file-upload-area {
+        border: 2px dashed #cbd5e1;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: #424242;
+    }
+
+    .file-upload-area:hover {
+        border-color: var(--primary-color);
+        background: #f0f9ff;
+    }
+
+    .file-upload-area.dragover {
+        border-color: var(--primary-color);
+        background: #f0f9ff;
+        transform: scale(1.02);
+    }
+
+    .upload-icon {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    /* Test Suite Preview Styles */
+    .test-suite-preview {
+        display: none;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .test-suite-preview.show {
+        display: block;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .test-case-list {
+        max-height: 300px;
+        overflow-y: auto;
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .test-case-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+        background: white;
+        border-radius: 6px;
+        border-left: 4px solid var(--primary-color);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .test-case-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .test-case-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        background: #f8fafc;
+    }
+
+    .test-case-item.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .test-case-item.selected {
+        border-left-color: var(--success-color);
+        background: #f0fdf4;
+    }
+
+    .test-case-icon {
+        color: var(--primary-color);
+        margin-right: 0.75rem;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .test-case-item:hover .test-case-icon {
+        color: var(--success-color);
+    }
+
+    .test-case-name {
+        font-weight: 500;
+        color: var(--dark-color);
+        flex: 1;
+        transition: all 0.3s ease;
+    }
+
+    .test-case-item:hover .test-case-name {
+        color: var(--success-color);
+    }
+
+    .test-case-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        background: #e2e8f0;
+        color: var(--secondary-color);
+        transition: all 0.3s ease;
+    }
+
+    .test-case-status.running {
+        background: #fef3c7;
+        color: #92400e;
+        animation: pulse 1s infinite;
+    }
+
+    .test-case-status.passed {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .test-case-status.failed {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .test-case-status.skipped {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .run-icon {
+        opacity: 0;
+        margin-left: 0.5rem;
+        color: var(--success-color);
+        transition: all 0.3s ease;
+    }
+
+    .test-case-item:hover .run-icon {
+        opacity: 1;
+    }
+
+    .test-suite-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .run-mode-selector {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .run-mode-selector label {
+        margin: 0;
+        font-weight: 500;
+        color: var(--dark-color);
+    }
+
+    .run-mode-selector input[type="radio"] {
+        margin-right: 0.25rem;
+    }
+
+    .selected-tests-info {
+        font-size: 0.9rem;
+        color: #3b3b3b;
+    }
+
+    /* Results Section Styles */
+    .results-section {
+        display: none;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .results-section.show {
+        display: block;
+    }
+
+    .result-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .result-card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: var(--box-shadow);
+        border-left: 4px solid;
+    }
+
+    .result-card.passed {
+        border-left-color: var(--success-color);
+    }
+
+    .result-card.failed {
+        border-left-color: var(--danger-color);
+    }
+
+    .result-card.skipped {
+        border-left-color: var(--warning-color);
+    }
+
+    .result-card.total {
+        border-left-color: var(--primary-color);
+    }
+
+    .result-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .result-label {
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .test-details {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .test-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem;
+        border-bottom: 1px solid #e2e8f0;
+        background: white;
+        margin-bottom: 0.5rem;
+        border-radius: 6px;
+    }
+
+    .test-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .test-name {
+        font-weight: 500;
+        color: var(--dark-color);
+    }
+
+    .test-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .test-status.passed {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .test-status.failed {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .test-status.skipped {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    /* Logs Section Styles */
+    .logs-section {
+        display: none;
+    }
+
+    .logs-section.show {
+        display: block;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .log-container {
+        background: var(--console-bg);
+        color: #e2e8f0;
+        padding: 1.5rem;
+        height: 500px;
+        overflow-y: auto;
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        border-radius: 8px;
+        border: 2px solid #334155;
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
+    .log-entry {
+        margin-bottom: 0.5rem;
+        padding: 0.25rem 0;
+    }
+
+    .log-timestamp {
+        color: #64748b;
+        margin-right: 0.5rem;
+    }
+
+    .log-level {
+        padding: 0.1rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .log-level.info {
+        background: #1e40af;
+        color: white;
+    }
+
+    .log-level.warn {
+        background: #d97706;
+        color: white;
+    }
+
+    .log-level.error {
+        background: #dc2626;
+        color: white;
+    }
+
+    .log-level.debug {
+        background: #6b7280;
+        color: white;
+    }
+
+    .log-message {
+        color: #e2e8f0;
+    }
+
+    /* Real-time results update */
+    .result-number.updating {
+        animation: pulse 0.5s ease-in-out;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .btn-group-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-group-mobile .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        #console, .log-container {
+            height: 300px;
+            font-size: 0.8rem;
+        }
+
+        .result-summary {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .result-number {
+            font-size: 2rem;
+        }
+
+        .test-suite-controls {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        .run-mode-selector {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .header h1 {
+            font-size: 1.75rem;
+        }
+
+        .card-header,
+        .card-body {
+            padding: 1rem;
+        }
+
+        #console, .log-container {
+            height: 250px;
+        }
+
+        .result-summary {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .test-case-item.status-updated {
+    background: #fef3c7 !important;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+</style>
+
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1><i class="fas fa-robot me-3"></i>RobotSite Test Runner</h1>
+            <p>Upload and execute your Robot Framework test files with real-time console output</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-upload"></i>Test File Upload</h5>
+            </div>
+            <div class="card-body">
+                <form id="testForm">
+                    <div class="file-upload-area mb-4" id="fileUploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h6>Drop your test file here or click to browse</h6>
+                        <p class="text-muted mb-0">Supports .robot, .txt files</p>
+                        <input type="file" name="testfile" class="form-control mt-3" id="fileInput" required
+                            accept=".robot,.txt">
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-3 btn-group-mobile">
+                        <button type="submit" class="btn btn-primary" id="runBtn">
+                            <i class="fas fa-play"></i>
+                            Run All Tests
+                        </button>
+                        <button type="button" class="btn btn-danger" id="stopBtn">
+                            <i class="fas fa-stop"></i>
+                            Stop Execution
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Test Suite Preview Section -->
+        <div class="card test-suite-preview" id="testSuitePreview">
+            <div class="card-header">
+                <h5><i class="fas fa-list-check"></i>Test Suite Preview</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="mb-0">
+                        <i class="fas fa-file-code me-2"></i>
+                        <span id="suiteFileName" style="color: #fff;">Test Suite</span>
+                    </h6>
+                    <span class="badge bg-primary" style="color: #fff;" id="testCaseCount">0 test cases</span>
+                </div>
+
+                <div class="test-suite-controls">
+                    <div class="run-mode-selector">
+                        <label>
+                            <input type="radio" name="runMode" value="all" checked>
+                            Run All Tests
+                        </label>
+                        <label>
+                            <input type="radio" name="runMode" value="selected">
+                            Run Selected Tests
+                        </label>
+                    </div>
+                    <div class="selected-tests-info" id="selectedTestsInfo">
+                        Click on test cases to select them for individual execution
+                    </div>
+                </div>
+
+                <div class="test-case-list" id="testCaseList">
+                    <!-- Test cases will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="progress" class="progress-indicator">
+            <div class="d-flex align-items-center">
+                <div class="spinner-border text-primary me-3" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div>
+                    <h6 class="mb-1">Test Execution in Progress</h6>
+                    <p class="mb-0 text-muted">Please wait while your test is running...</p>
+                </div>
+                <span class="status-badge status-running ms-auto">
+                    <i class="fas fa-clock"></i>
+                    Running
+                </span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-terminal"></i>Live Console Output</h5>
+            </div>
+            <div class="card-body">
+                <div id="console"></div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="card results-section" id="resultsSection">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-bar"></i>Test Results</h5>
+            </div>
+            <div class="card-body">
+                <div class="result-summary" id="resultSummary">
+                    <div class="result-card total">
+                        <div class="result-number" id="totalTests">0</div>
+                        <div class="result-label">Total Tests</div>
+                    </div>
+                    <div class="result-card passed">
+                        <div class="result-number" id="passedTests">0</div>
+                        <div class="result-label">Passed</div>
+                    </div>
+                    <div class="result-card failed">
+                        <div class="result-number" id="failedTests">0</div>
+                        <div class="result-label">Failed</div>
+                    </div>
+                    <div class="result-card skipped">
+                        <div class="result-number" id="skippedTests">0</div>
+                        <div class="result-label">Skipped</div>
+                    </div>
+                </div>
+                
+                <div class="test-details">
+                    <h6 class="mb-3"><i class="fas fa-list"></i> Test Details</h6>
+                    <div id="testDetails">
+                        <!-- Test details will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logs Section -->
+        <div class="card logs-section" id="logsSection">
+            <div class="card-header">
+                <h5><i class="fas fa-file-alt"></i>Detailed Logs</h5>
+            </div>
+            <div class="card-body">
+                <div class="log-container" id="logContainer">
+                    <!-- Detailed logs will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const form = document.getElementById('testForm');
+        const consoleDiv = document.getElementById('console');
+        const stopBtn = document.getElementById('stopBtn');
+        const runBtn = document.getElementById('runBtn');
+        const progress = document.getElementById('progress');
+        const fileInput = document.getElementById('fileInput');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        
+        // Test Suite Preview elements
+        const testSuitePreview = document.getElementById('testSuitePreview');
+        const suiteFileName = document.getElementById('suiteFileName');
+        const testCaseCount = document.getElementById('testCaseCount');
+        const testCaseList = document.getElementById('testCaseList');
+        const selectedTestsInfo = document.getElementById('selectedTestsInfo');
+        
+        // Results and Logs elements
+        const resultsSection = document.getElementById('resultsSection');
+        const logsSection = document.getElementById('logsSection');
+        const totalTests = document.getElementById('totalTests');
+        const passedTests = document.getElementById('passedTests');
+        const failedTests = document.getElementById('failedTests');
+        const skippedTests = document.getElementById('skippedTests');
+        const testDetails = document.getElementById('testDetails');
+        const logContainer = document.getElementById('logContainer');
+
+        let eventSource = null;
+        let logTimeout = null;
+        let isRunning = false;
+        let testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0,
+            skipped: 0,
+            details: []
+        };
+        let detailedLogs = [];
+        let currentTestName = '';
+        let testCases = []; // Store parsed test cases from file
+        let selectedTests = new Set(); // Store selected test cases
+        let currentFile = null; // Store current file for individual test execution
+        let lastLogTime = null; // Track last log message time
+        let completionCheckInterval = null; // Interval for checking completion
+
+        // File upload drag and drop functionality
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+
+        fileUploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelection(files[0]);
+            }
+        });
+
+        fileUploadArea.addEventListener('click', () => {
+            if (!isRunning) { // Only allow file selection when not running
+                fileInput.click();
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0 && !isRunning) { // Only process when not running
+                handleFileSelection(e.target.files[0]);
+            }
+        });
+
+        // Run mode change handler
+        document.addEventListener('change', (e) => {
+            if (e.target.name === 'runMode' && !isRunning) { // Only allow mode change when not running
+                updateRunModeDisplay();
+            }
+        });
+
+        function handleFileSelection(file) {
+            if (isRunning) {
+                addConsoleMessage('Cannot change file while test is running.', 'error');
+                return;
+            }
+            
+            currentFile = file;
+            updateFileDisplay(file);
+            parseTestSuiteFile(file);
+        }
+
+        function updateFileDisplay(file) {
+            const uploadIcon = fileUploadArea.querySelector('.upload-icon i');
+            const title = fileUploadArea.querySelector('h6');
+            const subtitle = fileUploadArea.querySelector('p');
+
+            uploadIcon.className = 'fas fa-file-alt';
+            title.textContent = file.name;
+            subtitle.textContent = `Size: ${(file.size / 1024).toFixed(2)} KB`;
+            fileUploadArea.style.borderColor = 'var(--success-color)';
+            fileUploadArea.style.background = '#f0fdf4';
+        }
+
+        function parseTestSuiteFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const parsedTestCases = extractTestCases(content);
+                displayTestSuitePreview(file.name, parsedTestCases);
+            };
+            reader.readAsText(file);
+        }
+
+        function extractTestCases(content) {
+            const testCases = [];
+            const lines = content.split('\n');
+            let inTestCaseSection = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                const trimmedLine = line.trim();
+                
+                // Check if we're entering the test cases section
+                if (trimmedLine.match(/^\*+\s*(test\s*cases?|tests?)\s*\**/i)) {
+                    inTestCaseSection = true;
+                    continue;
+                }
+                
+                // Check if we're leaving the test cases section (entering another section)
+                if (inTestCaseSection && trimmedLine.match(/^\*+\s*(keywords?|variables?|settings?|tasks?)\s*\**/i)) {
+                    inTestCaseSection = false;
+                    continue;
+                }
+                
+                if (inTestCaseSection && trimmedLine) {
+                    // A test case name is a line that:
+                    // 1. Doesn't start with whitespace (not indented)
+                    // 2. Doesn't start with special characters like [, |, #
+                    // 3. Is not empty
+                    // 4. Is not a comment
+                    if (!line.match(/^\s/) && // Not indented (test case names start at column 0)
+                        !trimmedLine.match(/^[\[\]|#]/) && // Not a setting or comment
+                        !trimmedLine.match(/^\.\.\./)) { // Not a continuation line
+                        
+                        // Clean up the test case name
+                        let testCaseName = trimmedLine.replace(/\s+/g, ' ').trim();
+                        
+                        // Skip if it's likely a keyword, setting, or empty
+                        if (testCaseName.length > 0 && 
+                            !testCaseName.match(/^(library|resource|variables|documentation|tags|setup|teardown|timeout|suite\s+setup|suite\s+teardown|test\s+setup|test\s+teardown)/i)) {
+                            
+                            testCases.push({
+                                name: testCaseName,
+                                status: 'pending'
+                            });
+                        }
+                    }
+                }
+            }
+
+            // Remove duplicates based on test case name
+            const uniqueTestCases = testCases.filter((test, index, self) => 
+                index === self.findIndex(t => t.name.toLowerCase() === test.name.toLowerCase())
+            );
+
+            return uniqueTestCases;
+        }
+
+        function displayTestSuitePreview(fileName, parsedTestCases) {
+            testCases = parsedTestCases;
+            selectedTests.clear();
+            
+            // Update suite info
+            suiteFileName.textContent = fileName;
+            testCaseCount.textContent = `${testCases.length} test case${testCases.length !== 1 ? 's' : ''}`;
+            
+            // Clear and populate test case list
+            testCaseList.innerHTML = '';
+            
+            if (testCases.length === 0) {
+                testCaseList.innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No test cases found in the uploaded file.</p>
+                        <small>Make sure your file contains a "*** Test Cases ***" section.</small>
+                    </div>
+                `;
+            } else {
+                testCases.forEach((testCase, index) => {
+                    const testCaseItem = document.createElement('div');
+                    testCaseItem.className = 'test-case-item';
+                    testCaseItem.id = `test-case-${index}`;
+                    testCaseItem.dataset.testName = testCase.name;
+                    testCaseItem.dataset.testIndex = index;
+                    
+                    testCaseItem.innerHTML = `
+                        <i class="fas fa-flask test-case-icon"></i>
+                        <span class="test-case-name">${testCase.name}</span>
+                        <i class="fas fa-play run-icon" title="Click to run this test"></i>
+                        <span class="test-case-status" id="status-${index}">pending</span>
+                    `;
+                    
+                    // Add click handler for individual test execution
+                    testCaseItem.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        handleTestCaseClick(index, testCase.name);
+                    });
+                    
+                    testCaseList.appendChild(testCaseItem);
+                });
+            }
+            
+            // Show the preview section
+            testSuitePreview.classList.add('show');
+            updateRunModeDisplay();
+        }
+
+        function handleTestCaseClick(index, testName) {
+            if (isRunning) {
+                addConsoleMessage('Cannot select tests while execution is running.', 'error');
+                return;
+            }
+
+            const runMode = document.querySelector('input[name="runMode"]:checked').value;
+            
+            if (runMode === 'all') {
+                // If in "Run All" mode, switch to "Run Selected" and select this test
+                document.querySelector('input[name="runMode"][value="selected"]').checked = true;
+                selectedTests.clear();
+                selectedTests.add(index);
+                updateTestCaseSelection();
+                updateRunModeDisplay();
+            } else {
+                // Toggle selection in "Run Selected" mode
+                if (selectedTests.has(index)) {
+                    selectedTests.delete(index);
+                } else {
+                    selectedTests.add(index);
+                }
+                updateTestCaseSelection();
+                updateRunModeDisplay();
+            }
+
+            // If a test is selected and we're in selected mode, run it immediately
+            if (runMode === 'selected' || document.querySelector('input[name="runMode"]:checked').value === 'selected') {
+                if (selectedTests.size === 1 && selectedTests.has(index)) {
+                    runSelectedTests();
+                }
+            }
+        }
+
+        function updateTestCaseSelection() {
+            testCases.forEach((testCase, index) => {
+                const testCaseItem = document.getElementById(`test-case-${index}`);
+                if (testCaseItem) {
+                    if (selectedTests.has(index)) {
+                        testCaseItem.classList.add('selected');
+                    } else {
+                        testCaseItem.classList.remove('selected');
+                    }
+                }
+            });
+        }
+
+        function updateRunModeDisplay() {
+            const runMode = document.querySelector('input[name="runMode"]:checked').value;
+            const selectedCount = selectedTests.size;
+            
+            if (runMode === 'all') {
+                selectedTestsInfo.textContent = 'All tests will be executed';
+                runBtn.innerHTML = '<i class="fas fa-play"></i> Run All Tests';
+                
+                // Remove selection styling from all test cases
+                testCases.forEach((testCase, index) => {
+                    const testCaseItem = document.getElementById(`test-case-${index}`);
+                    if (testCaseItem) {
+                        testCaseItem.classList.remove('selected');
+                    }
+                });
+            } else {
+                if (selectedCount === 0) {
+                    selectedTestsInfo.textContent = 'Click on test cases to select them for execution';
+                    runBtn.innerHTML = '<i class="fas fa-play"></i> Run Selected Tests';
+                } else {
+                    selectedTestsInfo.textContent = `${selectedCount} test${selectedCount !== 1 ? 's' : ''} selected for execution`;
+                    runBtn.innerHTML = `<i class="fas fa-play"></i> Run ${selectedCount} Selected Test${selectedCount !== 1 ? 's' : ''}`;
+                }
+            }
+        }
+
+        
+        function updateTestCaseStatus(testName, status) {
+    if (!testName) return;
+    
+    // Find the test case in our list and update its status
+    // Try exact match first
+    let testIndex = testCases.findIndex(test => 
+        test.name.toLowerCase() === testName.toLowerCase()
+    );
+    
+    // If no exact match, try partial matching
+    if (testIndex === -1) {
+        testIndex = testCases.findIndex(test => 
+            test.name.toLowerCase().includes(testName.toLowerCase()) || 
+            testName.toLowerCase().includes(test.name.toLowerCase())
+        );
+    }
+    
+    // If still no match, try fuzzy matching (remove special characters and extra spaces)
+    if (testIndex === -1) {
+        const normalizedTestName = testName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, ' ').toLowerCase();
+        testIndex = testCases.findIndex(test => {
+            const normalizedCaseName = test.name.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, ' ').toLowerCase();
+            return normalizedCaseName === normalizedTestName || 
+                   normalizedCaseName.includes(normalizedTestName) || 
+                   normalizedTestName.includes(normalizedCaseName);
+        });
+    }
+    
+    if (testIndex !== -1) {
+        testCases[testIndex].status = status;
+        const statusElement = document.getElementById(`status-${testIndex}`);
+        if (statusElement) {
+            statusElement.textContent = status;
+            statusElement.className = `test-case-status ${status}`;
+        }
+        
+        // Add visual feedback for status change
+        const testCaseItem = document.getElementById(`test-case-${testIndex}`);
+        if (testCaseItem) {
+            testCaseItem.classList.add('status-updated');
+            setTimeout(() => {
+                testCaseItem.classList.remove('status-updated');
+            }, 1000);
+        }
+    } else {
+        // Log unmatched test names for debugging
+        console.log(`Could not match test name: "${testName}" with existing test cases`);
+    }
+}
+
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('/status', { method: 'GET' });
+                if (response.ok) {
+                    const status = await response.json();
+                    return status.running || false;
+                }
+            } catch (error) {
+                console.log('Server status check failed:', error);
+            }
+            return false;
+        }
+
+        function showProgress() {
+            progress.classList.add('show');
+            runBtn.disabled = true;
+            stopBtn.disabled = false;
+            isRunning = true;
+
+            // Disable test case selection during execution
+            testCases.forEach((testCase, index) => {
+                const testCaseItem = document.getElementById(`test-case-${index}`);
+                if (testCaseItem) {
+                    testCaseItem.classList.add('disabled');
+                }
+            });
+
+            // Disable file input and run mode selectors
+            fileInput.disabled = true;
+            document.querySelectorAll('input[name="runMode"]').forEach(radio => {
+                radio.disabled = true;
+            });
+
+            // Show results section immediately but with empty data
+            resultsSection.classList.add('show');
+            logsSection.classList.add('show');
+
+            // Reset test results
+            testResults = { total: 0, passed: 0, failed: 0, skipped: 0, details: [] };
+            detailedLogs = [];
+            currentTestName = '';
+            lastLogTime = Date.now();
+            
+            // Reset test case statuses to pending (only for tests that will run)
+            const runMode = document.querySelector('input[name="runMode"]:checked').value;
+            if (runMode === 'selected') {
+                // Only reset selected tests
+                selectedTests.forEach(index => {
+                    testCases[index].status = 'pending';
+                    const statusElement = document.getElementById(`status-${index}`);
+                    if (statusElement) {
+                        statusElement.textContent = 'pending';
+                        statusElement.className = 'test-case-status';
+                    }
+                });
+            } else {
+                // Reset all tests
+                testCases.forEach((testCase, index) => {
+                    testCase.status = 'pending';
+                    const statusElement = document.getElementById(`status-${index}`);
+                    if (statusElement) {
+                        statusElement.textContent = 'pending';
+                        statusElement.className = 'test-case-status';
+                    }
+                });
+            }
+            
+            updateResultsDisplay();
+
+            // Update button states
+            runBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+
+            // Start completion check interval
+            startCompletionCheck();
+        }
+
+        async function hideProgress() {
+            progress.classList.remove('show');
+            runBtn.disabled = false;
+            stopBtn.disabled = true;
+            isRunning = false;
+
+            // Re-enable test case selection
+            testCases.forEach((testCase, index) => {
+                const testCaseItem = document.getElementById(`test-case-${index}`);
+                if (testCaseItem) {
+                    testCaseItem.classList.remove('disabled');
+                }
+            });
+
+            // Re-enable file input and run mode selectors
+            fileInput.disabled = false;
+            document.querySelectorAll('input[name="runMode"]').forEach(radio => {
+                radio.disabled = false;
+            });
+
+            // Reset button states
+            updateRunModeDisplay();
+
+            // Clear completion check interval
+            if (completionCheckInterval) {
+                clearInterval(completionCheckInterval);
+                completionCheckInterval = null;
+            }
+
+            // Clear log timeout
+            if (logTimeout) {
+                clearTimeout(logTimeout);
+                logTimeout = null;
+            }
+
+            // Close EventSource connection
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+
+            // Verify server has stopped processing
+            setTimeout(async () => {
+                const serverStillRunning = await checkServerStatus();
+                if (serverStillRunning) {
+                    addConsoleMessage('Warning: Server may still be processing. If issues persist, refresh the page.', 'warn');
+                }
+            }, 2000);
+        }
+
+        function startCompletionCheck() {
+            // Check for completion every 3 seconds
+            completionCheckInterval = setInterval(async () => {
+                const now = Date.now();
+                const timeSinceLastLog = now - lastLogTime;
+                
+                // If no logs for 15 seconds, check server status
+                if (timeSinceLastLog > 15000) {
+                    const serverStillRunning = await checkServerStatus();
+                    
+                    if (!serverStillRunning) {
+                        hideProgress();
+                        addConsoleMessage('Test execution completed (detected via server status check).', 'info');
+                    } else if (timeSinceLastLog > 30000) {
+                        // If still no logs after 30 seconds, force completion
+                        hideProgress();
+                        addConsoleMessage('Test execution timed out due to prolonged inactivity.', 'warn');
+                    }
+                }
+            }, 3000);
+        }
+
+        function runSelectedTests() {
+            if (isRunning) {
+                addConsoleMessage('Test is already running. Please wait or stop the current execution.', 'error');
+                return;
+            }
+
+            const runMode = document.querySelector('input[name="runMode"]:checked').value;
+            
+            if (runMode === 'selected' && selectedTests.size === 0) {
+                addConsoleMessage('No tests selected. Please select at least one test case.', 'error');
+                return;
+            }
+
+            if (!currentFile) {
+                addConsoleMessage('No file selected. Please upload a test file first.', 'error');
+                return;
+            }
+
+            consoleDiv.innerHTML = '';
+            
+            if (runMode === 'selected') {
+                const selectedTestNames = Array.from(selectedTests).map(index => testCases[index].name);
+                addConsoleMessage(`Starting execution of ${selectedTestNames.length} selected test(s): ${selectedTestNames.join(', ')}`, 'info');
+            } else {
+                addConsoleMessage('Starting execution of all tests...', 'info');
+            }
+
+            // Create form data
+            const formData = new FormData();
+            formData.append('testfile', currentFile);
+            
+            if (runMode === 'selected') {
+                // Add selected test names to form data
+                Array.from(selectedTests).forEach(index => {
+                    formData.append('selectedTests', testCases[index].name);
+                });
+            }
+
+            // Start execution
+            startTestExecution(formData);
+        }
+
+        async function startTestExecution(formData) {
+            try {
+                const response = await fetch('/run', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                startLogStream();
+            } catch (error) {
+                console.error('Error starting test:', error);
+                addConsoleMessage(`Error starting test: ${error.message}`, 'error');
+                hideProgress();
+            }
+        }
+
+        function startLogStream() {
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/stream');
+            showProgress();
+
+            let messageCount = 0;
+            let lastMessageTime = Date.now();
+
+            eventSource.onmessage = (e) => {
+                if (!e.data) return;
+
+                messageCount++;
+                lastMessageTime = Date.now();
+                
+                // Update last log time
+                lastLogTime = Date.now();
+
+                // Display in console
+                consoleDiv.innerHTML += e.data + '<br>';
+                consoleDiv.scrollTop = consoleDiv.scrollHeight;
+
+                // Parse test results from log data
+                parseTestResults(e.data);
+
+                // Add to detailed logs
+                detailedLogs.push({
+                    timestamp: new Date().toLocaleTimeString(),
+                    level: 'info',
+                    message: e.data
+                });
+
+                // Update logs display
+                updateLogsDisplay();
+
+                // Check for completion markers with more comprehensive patterns
+                const completionPatterns = [
+                    /Output:/i,
+                    /Log:/i,
+                    /Report:/i,
+                    /critical tests/i,
+                    /elapsed time/i,
+                    /END_OF_TEST/i,
+                    /Tests execution ended/i,
+                    /All tests processed/i,
+                    /Test execution finished/i,
+                    /==============================================================================$/,
+                    /^={50,}$/,
+                    /Test run completed/i,
+                    /Execution completed/i,
+                    /Robot Framework.*finished/i
+                ];
+
+                if (completionPatterns.some(pattern => pattern.test(e.data))) {
+                    setTimeout(async () => {
+                        // Double-check server status before marking as complete
+                        const serverStillRunning = await checkServerStatus();
+                        if (!serverStillRunning) {
+                            hideProgress();
+                            addConsoleMessage('Test execution completed successfully.', 'success');
+                        } else {
+                            addConsoleMessage('Test appears complete but server is still processing...', 'info');
+                        }
+                    }, 3000);
+                }
+            };
+
+            eventSource.onerror = (error) => {
+                console.error('EventSource failed:', error);
+                
+                // Check if this is a normal closure or an actual error
+                if (eventSource && eventSource.readyState === EventSource.CLOSED) {
+                    addConsoleMessage('Connection closed. Test may have completed.', 'info');
+                } else {
+                    addConsoleMessage('Connection to server lost. Test execution may have completed.', 'error');
+                }
+                
+                hideProgress();
+            };
+
+            eventSource.onopen = () => {
+                console.log('EventSource connection opened');
+                lastLogTime = Date.now();
+                addConsoleMessage('Connected to test execution stream.', 'info');
+            };
+        }
+
+        function addConsoleMessage(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const colorClass = type === 'error' ? 'text-danger' : type === 'success' ? 'text-success' : '';
+            consoleDiv.innerHTML += `<span class="text-muted">[${timestamp}]</span> <span class="${colorClass}">${message}</span><br>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+
+            // Add to detailed logs
+            detailedLogs.push({
+                timestamp: timestamp,
+                level: type,
+                message: message
+            });
+
+            // Update logs display in real-time
+            updateLogsDisplay();
+        }
+
+        
+function extractTestName(logLine) {
+    // Enhanced test name extraction patterns
+    const patterns = [
+        // Robot Framework standard patterns
+        /^([^|]+)\s*\|\s*(PASS|FAIL|SKIP)/i,
+        /^(.+?)\s*\|\s*(PASS|FAIL|SKIP)\s*\|/i,
+        /Test\s+['"]([^'"]+)['"].*?(PASS|FAIL|SKIP)/i,
+        /Running test[:\s]+['"]?([^'"|\n]+)['"]?/i,
+        /Test[:\s]+['"]?([^'"|\n]+)['"]?/i,
+        /^([A-Z][A-Za-z0-9\s_-]+)\s+\.\.\./,
+        /==\s*([^=]+)\s*==/,
+        /Starting test[:\s]+([^\n]+)/i,
+        /Executing test[:\s]+([^\n]+)/i,
+        /Test case[:\s]+([^\n]+)/i,
+        // Additional patterns for different Robot Framework versions
+        /^\s*([A-Za-z][A-Za-z0-9\s_-]+)\s*$/,
+        /Test\s*:\s*([^\n]+)/i,
+        /^([^:]+):\s*(PASS|FAIL|SKIP)/i
+    ];
+
+    for (const pattern of patterns) {
+        const match = logLine.match(pattern);
+        if (match && match[1]) {
+            const testName = match[1].trim();
+            // Filter out obviously invalid test names
+            if (testName.length > 2 && 
+                testName.length < 200 && 
+                !testName.match(/^(library|resource|variables|documentation|tags|setup|teardown|timeout|suite\s+setup|suite\s+teardown|test\s+setup|test\s+teardown|log|comment|set\s+variable)/i)) {
+                return testName;
+            }
+        }
+    }
+
+    return null;
+}
+
+function parseTestResults(logData) {
+    const line = logData.trim();
+    
+    // Extract test name if present - enhanced patterns
+    const testName = extractTestName(line);
+    if (testName && testName.length > 0 && testName.length < 100) {
+        currentTestName = testName;
+        
+        // Update test case status to running
+        updateTestCaseStatus(testName, 'running');
+    }
+
+    // Enhanced test status detection with more comprehensive patterns
+    const passPatterns = [
+        /\|\s*PASS\s*\|/i,
+        /PASS/i,
+        /passed/i,
+        /success/i,
+        /OK/i,
+        /✓/,
+        /\bpass\b/i,
+        /Test\s+passed/i,
+        /\|\s*OK\s*\|/i
+    ];
+
+    const failPatterns = [
+        /\|\s*FAIL\s*\|/i,
+        /FAIL/i,
+        /failed/i,
+        /error/i,
+        /exception/i,
+        /✗/,
+        /\bfail\b/i,
+        /assertion.*failed/i,
+        /Test\s+failed/i,
+        /\|\s*ERROR\s*\|/i,
+        /AssertionError/i,
+        /Exception/i
+    ];
+
+    const skipPatterns = [
+        /\|\s*SKIP\s*\|/i,
+        /SKIP/i,
+        /skipped/i,
+        /ignore/i,
+        /\bskip\b/i,
+        /Test\s+skipped/i,
+        /\|\s*IGNORED\s*\|/i
+    ];
+
+    let status = null;
+    let testNameToUse = currentTestName;
+
+    // If we don't have a current test name, try to extract it from status lines
+    if (!testNameToUse) {
+        // Look for Robot Framework test result patterns like "TestName | PASS |"
+        const statusLinePatterns = [
+            /^([^|]+)\s*\|\s*(PASS|FAIL|SKIP)/i,
+            /^(.+?)\s+\.\.\.\s+(PASS|FAIL|SKIP)/i,
+            /Test\s+['"]([^'"]+)['"].*?(PASS|FAIL|SKIP)/i
+        ];
+
+        for (const pattern of statusLinePatterns) {
+            const match = line.match(pattern);
+            if (match && match[1] && match[2]) {
+                testNameToUse = match[1].trim();
+                const detectedStatus = match[2].toLowerCase();
+                if (detectedStatus === 'pass') status = 'passed';
+                else if (detectedStatus === 'fail') status = 'failed';
+                else if (detectedStatus === 'skip') status = 'skipped';
+                break;
+            }
+        }
+    }
+
+    // If we still don't have status, check patterns
+    if (!status) {
+        if (passPatterns.some(pattern => pattern.test(line))) {
+            status = 'passed';
+        } else if (failPatterns.some(pattern => pattern.test(line))) {
+            status = 'failed';
+        } else if (skipPatterns.some(pattern => pattern.test(line))) {
+            status = 'skipped';
+        }
+    }
+
+    // If we detected a status, process the result
+    if (status && testNameToUse) {
+        // Update test case status in preview
+        updateTestCaseStatus(testNameToUse, status);
+        
+        // Check if this test already exists (to avoid duplicates)
+        const existingTestIndex = testResults.details.findIndex(test => 
+            test.name.toLowerCase() === testNameToUse.toLowerCase()
+        );
+        
+        if (existingTestIndex >= 0) {
+            // Update existing test if status changed
+            if (testResults.details[existingTestIndex].status !== status) {
+                // Decrement old status count
+                const oldStatus = testResults.details[existingTestIndex].status;
+                if (oldStatus === 'passed') testResults.passed--;
+                else if (oldStatus === 'failed') testResults.failed--;
+                else if (oldStatus === 'skipped') testResults.skipped--;
+                
+                // Update to new status
+                testResults.details[existingTestIndex].status = status;
+                
+                // Increment new status count
+                if (status === 'passed') testResults.passed++;
+                else if (status === 'failed') testResults.failed++;
+                else if (status === 'skipped') testResults.skipped++;
+            }
+        } else {
+            // Add new test
+            testResults.details.push({
+                name: testNameToUse,
+                status: status
+            });
+            
+            // Increment counters
+            testResults.total++;
+            if (status === 'passed') testResults.passed++;
+            else if (status === 'failed') testResults.failed++;
+            else if (status === 'skipped') testResults.skipped++;
+        }
+
+        // Update display immediately
+        updateResultsDisplay();
+        
+        // Reset current test name after processing
+        currentTestName = '';
+    }
+
+    // Also check for Robot Framework summary patterns
+    const summaryPatterns = [
+        /(\d+)\s+critical\s+tests?\s*,\s*(\d+)\s+passed\s*,\s*(\d+)\s+failed/i,
+        /(\d+)\s+tests?\s*,\s*(\d+)\s+passed\s*,\s*(\d+)\s+failed/i,
+        /Total:\s*(\d+)\s*,\s*Pass:\s*(\d+)\s*,\s*Fail:\s*(\d+)/i,
+        /(\d+)\s+tests?\s*,\s*(\d+)\s+passed\s*,\s*(\d+)\s+failed\s*,\s*(\d+)\s+skipped/i
+    ];
+
+    for (const pattern of summaryPatterns) {
+        const match = line.match(pattern);
+        if (match) {
+            const newTotal = parseInt(match[1]) || 0;
+            const newPassed = parseInt(match[2]) || 0;
+            const newFailed = parseInt(match[3]) || 0;
+            const newSkipped = match[4] ? parseInt(match[4]) : (newTotal - newPassed - newFailed);
+            
+            // Only update if we got meaningful numbers
+            if (newTotal > 0) {
+                testResults.total = newTotal;
+                testResults.passed = newPassed;
+                testResults.failed = newFailed;
+                testResults.skipped = Math.max(0, newSkipped);
+                updateResultsDisplay();
+            }
+            break;
+        }
+    }
+
+    // Additional pattern for individual test completion logs
+    const testCompletionPatterns = [
+        /^(.+?)\s*\|\s*PASS\s*\|/i,
+        /^(.+?)\s*\|\s*FAIL\s*\|/i,
+        /^(.+?)\s*\|\s*SKIP\s*\|/i,
+        /Test\s+['"]([^'"]+)['"].*completed.*with\s+status:\s*(PASS|FAIL|SKIP)/i
+    ];
+
+    for (const pattern of testCompletionPatterns) {
+        const match = line.match(pattern);
+        if (match && match[1]) {
+            const completedTestName = match[1].trim();
+            let completedStatus = null;
+            
+            if (line.includes('PASS')) completedStatus = 'passed';
+            else if (line.includes('FAIL')) completedStatus = 'failed';
+            else if (line.includes('SKIP')) completedStatus = 'skipped';
+            
+            if (completedStatus) {
+                updateTestCaseStatus(completedTestName, completedStatus);
+                
+                // Update results if not already tracked
+                const existingTest = testResults.details.find(test => 
+                    test.name.toLowerCase() === completedTestName.toLowerCase()
+                );
+                
+                if (!existingTest) {
+                    testResults.details.push({
+                        name: completedTestName,
+                        status: completedStatus
+                    });
+                    
+                    testResults.total++;
+                    if (completedStatus === 'passed') testResults.passed++;
+                    else if (completedStatus === 'failed') testResults.failed++;
+                    else if (completedStatus === 'skipped') testResults.skipped++;
+                    
+                    updateResultsDisplay();
+                }
+            }
+            break;
+        }
+    }
+}
+
+        function updateResultsDisplay() {
+            // Add pulse animation to numbers when they change
+            const elements = [totalTests, passedTests, failedTests, skippedTests];
+            elements.forEach(el => {
+                el.classList.add('updating');
+                setTimeout(() => el.classList.remove('updating'), 500);
+            });
+
+            // Update numbers
+            totalTests.textContent = testResults.total;
+            passedTests.textContent = testResults.passed;
+            failedTests.textContent = testResults.failed;
+            skippedTests.textContent = testResults.skipped;
+
+            // Update test details
+            testDetails.innerHTML = '';
+            testResults.details.forEach(test => {
+                const testItem = document.createElement('div');
+                testItem.className = 'test-item';
+                testItem.innerHTML = `
+                    <span class="test-name">${test.name}</span>
+                    <span class="test-status ${test.status}">${test.status}</span>
+                `;
+                testDetails.appendChild(testItem);
+            });
+
+            // If no test details yet, show a placeholder
+            if (testResults.details.length === 0 && testResults.total === 0) {
+                testDetails.innerHTML = '<p class="text-muted text-center">Waiting for test results...</p>';
+            }
+        }
+
+        function updateLogsDisplay() {
+            // Clear and repopulate logs
+            logContainer.innerHTML = '';
+            detailedLogs.forEach(log => {
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                logEntry.innerHTML = `
+                    <span class="log-timestamp">${log.timestamp}</span>
+                    <span class="log-level ${log.level}">${log.level}</span>
+                    <span class="log-message">${log.message}</span>
+                `;
+                logContainer.appendChild(logEntry);
+            });
+
+            // Auto-scroll to bottom
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            runSelectedTests();
+        });
+
+        stopBtn.addEventListener('click', async () => {
+            if (!isRunning) {
+                addConsoleMessage('No test is currently running.', 'error');
+                return;
+            }
+
+            try {
+                addConsoleMessage('Sending stop request to server...', 'info');
+                
+                // Close EventSource first to stop receiving logs
+                if (eventSource) {
+                    eventSource.close();
+                    eventSource = null;
+                }
+
+                // Send stop request to server
+                const res = await fetch('/stop', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ force: true })
+                });
+                
+                if (res.ok) {
+                    const msg = await res.text();
+                    addConsoleMessage(`Server response: ${msg}`, 'info');
+                } else {
+                    addConsoleMessage(`Stop request failed with status: ${res.status}`, 'error');
+                }
+                
+                // Force cleanup regardless of server response
+                hideProgress();
+                addConsoleMessage('Test execution stopped by user.', 'info');
+                
+            } catch (error) {
+                console.error('Error stopping test:', error);
+                addConsoleMessage(`Error stopping test: ${error.message}`, 'error');
+                
+                // Force cleanup even if stop request fails
+                hideProgress();
+                addConsoleMessage('Forced test execution cleanup.', 'info');
+            }
+        });
+
+        // Initialize button states
+        stopBtn.disabled = true;
+
+        // Add welcome message
+        addConsoleMessage('Robot Framework Test Runner initialized. Upload a test file to begin.', 'success');
+    </script>
+</body>
+
+</html>

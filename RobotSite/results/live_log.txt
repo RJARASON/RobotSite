@@ -1,0 +1,23 @@
+==============================================================================
+HelloWorld                                                                    
+==============================================================================
+First Test                                                            [ WARN ] Open Browser is for quick experimentation and debugging only. Use New Page for production.
+| FAIL |
+Error: browserType.launch: Executable doesn't exist at c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\playwright-core\.local-browsers\chromium-1169\chrome-win\chrome.exe
+???????????????????????????????????????????????????????????????????????????
+? Looks like Playwright Test or Playwright was just installed or updated. ?
+? Please run the following command to download new browsers:              ?
+?                                                                         ?
+?     npx playwright install                                              ?
+?                                                                         ?
+? <3 Playwright Team                                                      ?
+???????????????????????????????????????????????????????????????????????????
+------------------------------------------------------------------------------
+HelloWorld                                                            | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  C:\Users\MESSIE\Documents\Robotframe\RobotSite\results\output.xml
+Log:     C:\Users\MESSIE\Documents\Robotframe\RobotSite\results\log.html
+Report:  C:\Users\MESSIE\Documents\Robotframe\RobotSite\results\report.html
+
+END_OF_TEST

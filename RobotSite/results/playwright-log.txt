@@ -1,0 +1,70 @@
+{"level":30,"time":"2025-06-30T20:05:45.930Z","pid":12468,"hostname":"KODJO-PC","msg":"Listening on 127.0.0.1:56428"}
+(node:12468) DeprecationWarning: Calling start() is no longer necessary. It can be safely omitted.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{"level":30,"time":"2025-06-30T20:05:46.467Z","pid":12468,"hostname":"KODJO-PC","msg":"Start of node method newBrowser"}
+{"level":30,"time":"2025-06-30T20:05:46.550Z","pid":12468,"hostname":"KODJO-PC","msg":"Error of node method  newBrowser"}
+================= Original suppressed error =================
+browserType.launch: Executable doesn't exist at c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\playwright-core\.local-browsers\chromium-1169\chrome-win\chrome.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+    at _newBrowser (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:12098:54)
+    at newBrowser (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:12618:33)
+    at PlaywrightServer.newBrowser (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:13135:34)
+    at Object.onReceiveHalfClose (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:1461:25)
+    at BaseServerInterceptingCall.maybePushNextMessage (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:575:31)
+    at BaseServerInterceptingCall.handleEndEvent (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:615:14)
+    at ServerHttp2Stream.<anonymous> (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:382:18) {
+  name: 'Error'
+}
+=============================================================
+================= Original suppressed error =================
+Error: Tried to take screenshot, but no page was open.
+    at exists (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:10725:11)
+    at takeScreenshot (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:10769:3)
+    at PlaywrightServer.takeScreenshot (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:13135:34)
+    at Object.onReceiveHalfClose (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:1461:25)
+    at BaseServerInterceptingCall.maybePushNextMessage (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:575:31)
+    at BaseServerInterceptingCall.handleEndEvent (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:615:14)
+    at ServerHttp2Stream.<anonymous> (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:382:18)
+    at ServerHttp2Stream.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+=============================================================
+{"level":30,"time":"2025-06-30T20:05:46.780Z","pid":12468,"hostname":"KODJO-PC","msg":"Start of node method takeScreenshot"}
+{"level":30,"time":"2025-06-30T20:05:46.781Z","pid":12468,"hostname":"KODJO-PC","msg":"Error of node method  takeScreenshot"}
+================= Original suppressed error =================
+Error: Browser has been closed.
+    at PlaywrightState.getActiveBrowser (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:12226:15)
+    at PlaywrightServer.getActiveBrowser (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:13122:59)
+    at PlaywrightServer.setTimeout (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:13370:57)
+    at Object.onReceiveHalfClose (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:1461:25)
+    at BaseServerInterceptingCall.maybePushNextMessage (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:575:31)
+    at BaseServerInterceptingCall.handleEndEvent (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:615:14)
+    at ServerHttp2Stream.<anonymous> (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:382:18)
+    at ServerHttp2Stream.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+=============================================================
+================= Original suppressed error =================
+Error: Browser has been closed.
+    at PlaywrightState.getActiveBrowser (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:12226:15)
+    at PlaywrightServer.getActiveBrowser (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:13122:59)
+    at PlaywrightServer.setTimeout (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js:13370:57)
+    at Object.onReceiveHalfClose (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:1461:25)
+    at BaseServerInterceptingCall.maybePushNextMessage (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:575:31)
+    at BaseServerInterceptingCall.handleEndEvent (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:615:14)
+    at ServerHttp2Stream.<anonymous> (c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:382:18)
+    at ServerHttp2Stream.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+=============================================================
+{"level":30,"time":"2025-06-30T20:05:47.962Z","pid":12468,"hostname":"KODJO-PC","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2025-06-30T20:05:47.964Z","pid":12468,"hostname":"KODJO-PC","msg":"End of node method getBrowserCatalog"}
+{"level":30,"time":"2025-06-30T20:05:48.229Z","pid":12468,"hostname":"KODJO-PC","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2025-06-30T20:05:48.229Z","pid":12468,"hostname":"KODJO-PC","msg":"End of node method getBrowserCatalog"}

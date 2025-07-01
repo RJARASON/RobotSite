@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.1 on win32)" generated="2025-06-30T12:05:22.374315" rpa="false" schemaversion="5">
+<suite id="s1" name="HelloWorld" source="C:\Users\MESSIE\Documents\Robotframe\RobotSite\uploads\HelloWorld.robot">
+<test id="s1-t1" name="First Test" line="7">
+<kw name="Open Browser" owner="Browser">
+<msg time="2025-06-30T12:05:28.189024" level="WARN">Open Browser is for quick experimentation and debugging only. Use New Page for production.</msg>
+<msg time="2025-06-30T12:05:28.190372" level="INFO">{"browser": "chromium", "headless": false, "chromiumSandbox": false, "devtools": false, "handleSIGHUP": true, "handleSIGINT": true, "handleSIGTERM": true, "slowMo": 0.0, "timeout": 30000.0, "tracesDir": "C:\\Users\\MESSIE\\Documents\\Robotframe\\RobotSite\\results\\browser\\traces\\temp\\773445f4-290a-44a7-a8c3-a97bb660c0f6"}</msg>
+<msg time="2025-06-30T12:05:29.235635" level="INFO">Starting Browser process c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\index.js using at 127.0.0.1:56428</msg>
+<msg time="2025-06-30T12:05:46.996746" level="INFO">Keyword 'Take Screenshot  fail-screenshot-{index}' could not be run on failure:
+Error: Tried to take screenshot, but no page was open.</msg>
+<msg time="2025-06-30T12:05:46.997058" level="INFO">See also file:///C:/Users/MESSIE/Documents/Robotframe/RobotSite/results/playwright-log.txt for additional details.</msg>
+<msg time="2025-06-30T12:05:46.998350" level="FAIL">Error: browserType.launch: Executable doesn't exist at c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\playwright-core\.local-browsers\chromium-1169\chrome-win\chrome.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ &lt;3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝</msg>
+<arg>file:///C:/Users/MESSIE/OneDrive/Websites/Azull/index.html</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Opens a new browser instance. Use this keyword for quick experiments or debugging sessions.</doc>
+<status status="FAIL" start="2025-06-30T12:05:28.186892" elapsed="18.962927">Error: browserType.launch: Executable doesn't exist at c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\playwright-core\.local-browsers\chromium-1169\chrome-win\chrome.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ &lt;3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝</status>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-06-30T12:05:47.159467" elapsed="0.000832"/>
+</kw>
+<kw name="Close Browser" owner="Browser">
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" start="2025-06-30T12:05:47.160986" elapsed="0.000419"/>
+</kw>
+<status status="FAIL" start="2025-06-30T12:05:28.183920" elapsed="18.978258">Error: browserType.launch: Executable doesn't exist at c:\Users\MESSIE\Documents\Brightchamps\Kodjo-pc\Selenium\.venv\Lib\site-packages\Browser\wrapper\node_modules\playwright-core\.local-browsers\chromium-1169\chrome-win\chrome.exe
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     npx playwright install                                              ║
+║                                                                         ║
+║ &lt;3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝</status>
+</test>
+<status status="FAIL" start="2025-06-30T12:05:22.380261" elapsed="25.599998"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="HelloWorld" id="s1" pass="0" fail="1" skip="0">HelloWorld</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-06-30T12:05:28.189024" level="WARN">Open Browser is for quick experimentation and debugging only. Use New Page for production.</msg>
+</errors>
+</robot>
