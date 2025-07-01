@@ -6,6 +6,8 @@ RobotSite Test Runner is a lightweight web-based tool built with Flask that allo
 
 ----------
 
+INSTRUCTIONS
+
 - Open the 'app.py' file
 - Run the file (make sure you've installed these modules, flask and werkzeug and other modules that you are prompted to install.)
 
